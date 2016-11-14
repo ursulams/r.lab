@@ -72,7 +72,7 @@ install.packages("stringr") # installs the package in your library
 library(stringr) # loads the package for that R session 
                 ## (with or without quotes)
 ``` 
-<h3> from the RStudio tools menu ![](toolsmenu.png)</h3>
+<h3>from the RStudio tools menu ![](toolsmenu.png)</h3>
 
 ----
 <h2>let's talk data!</h2>
