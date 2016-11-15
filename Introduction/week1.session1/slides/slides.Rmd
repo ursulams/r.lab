@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = FALSE)
 >- <h3>statistical analysis</h3>
   <p>summary stats, models, algorithms</p>
 >- <h3>data visualization</h3>
-  <p>static (base, ggviz, ggplot) and interactive (Shiny)</p>
+  <p>static (base, ggplot2) and interactive (Shiny)</p>
 >- <h3>presentation</h3>
   <p>create dashboards, PDFs, websites and slides just like these ioslides</p>  
 >- <h3>it makes collaboration, editing, sharing, and replication easier!!!</h3> 
@@ -96,13 +96,13 @@ typeof(tf)
 class(tf)
 length(tf)
 ```
-<h3>most R coders prefer to use ( <- ) as their operator. ( = ) also works, but let's keep that one for passing parameters inside functions</h3>
+<h3>most R coders prefer to use ( <- ) as their operator. ( = ) also works, but lets keep that one for passing parameters inside functions</h3>
 <p>the RStudio shortcut for creating the <- operator is (ALT)(-)</p>
 
 ----
 ## {.build}
-<h3>let's create some more atomic vectors and assign them to variables
-1: a character string of length one with your name
+<h3>let's create some more atomic vectors and assign them to variables</h3>
+<h3>1: a character string of length one with your name
 assign it to a variable called 'my.name'</h3>
 <p>do we need the c() function if its a vector of length one?</p>
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
@@ -134,11 +134,11 @@ is.list(x)
 is.atomic(x)
 length(x)
 ```
-<h3>let's make a list out of our my.name and intro variables and call it my.intro.list
+<h3>let's make a list out of our my.name and intro variables and call it my.intro.list</h3>
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
 my.intro.list <- list(intro, my.name)
 ```
-<h3>what is the biggest difference between my.into and my.intro.list?</h3>
+<h3>what is the biggest difference between my.intro and my.intro.list?</h3>
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
 my.intro
 my.intro.list
