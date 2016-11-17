@@ -43,6 +43,9 @@ ast(string.sub <- gsub("s", "$", string))
 ## predefined categorical levels
 x <- as.factor(1:10)
 
+## view levels
+levels(x)
+
 ## this will throw an error
 mean(x)
 ## as will this attempt to assign a new value to predefined level
