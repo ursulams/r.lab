@@ -1,0 +1,164 @@
+---
+title: <span style="color:#0e2451">Expressions, Variables, and Data Structures</span>
+author: <span style="color:#0e2451">Ursula Kaczmarek</span>
+output: 
+  ioslides_presentation:
+    css: intro.css
+    logo: logo.jpg
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+----
+## {.build}
+<h3>a note on expressions</h3>
+<p>list of constants (the vectors), names (the labels for our vectors), and calls (everything that happens) behind each computation (action)</p>
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# here is a simple operation using the variables x and y
+x <- 10
+y <- x * 10
+is.vector(y)
+```
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# get the expression that makes up that operation
+exp <- quote(y <- x * 10)
+exp # this is the action behind but distinct from the result of 100
+# parse the syntax of this expression using ast() from the 'pryr' package
+ast(x <- 10)
+## the whole group below is the call
+#> \- ()
+#>  \- `<- # a name
+#>  \- `x # a name
+#>  \-  10 # a constant 
+```
+
+----
+##{.build}
+<h3>let's write some quick expressions</h2>
+<h4>create a vector with a value of one to 100 and assign it to an object called 'num.range'.</h4>
+<p>use a colon to denote the range (start:end)</p>
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+num.range <- 1:100
+```
+<h4>write an expression that uses the mean() function to find the mean value of our num.range object. assign it to an object named 'num.mean'</h4>
+<p>our function syntax is mean(object)</p>
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+num.mean <- mean(num.range)
+```
+
+<h4>print out num.mean</h4>
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+num.mean
+```
+
+----
+##{.build}
+<h4>create a character vector that reads "this is a string" and assign it to an object called 'string'</h4>
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+string <- "this is a string"
+```
+
+<h4>write an expression that uses the gsub() function to replace the letter 's' in our vector with a '$' and assign our new string to an object called 'string.sub'</h4>
+<p>look up the gsub() syntax</p>
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+?gsub
+```
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+string.sub <- gsub("s", "$", string)
+```
+----
+<h3>pro tips on naming variables</h3>
+>- <p>don't use existing function names like sum, mean, parse, etc.    
+want to find out if your object is a function? use <span style="color:#0e2451">is.function()</span>
+>- <p>don't use logic type vectors (TRUE or FALSE or NA or T or F)</p>
+>- <p>don't begin them with numbers (R will paste an 'x' before column headers starting with numbers)</p>
+>- <p>remember R replaces original objects when their assigned variables take on new assignments. look at the global environment pane to see the active values and datasets.</p>
+>- <p>give them some referential meaning</p>
+<center>![](starship.jpg) ![](crew.jpg)</center>
+
+----
+<h3>the class attribute and factors</h3>
+<h4>every object has attributes, the most important are type, name, dimension, and class</h4>
+<h4>common classes: character, integer, list, data.frame...</h4>
+<p>in general, an object's class determines its behavior (e.g., how it responds to a function) and is different from an object's type, which relates to how it's stored in memory</p>
+<h4>factors are a class of vectors that have predefined values to store categorical data</h4> 
+<p>you can't pass numeric functions through factors even if the vector is a number</p>
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+x <- 1:10
+mean(x)
+```
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+x <- as.factor(1:10)
+# these will throw an error
+mean(x)
+x[3] <- 3.5
+```
+
+----
+<h3>why do we need factors?</h3>
+>- <h4>factors are useful when you've got an idea of the possible values in your dataset and want to categorize them (very useful when colorizing in visualizations)</h4>
+>- <h4>factors are essential when training models with variables labelled as numbers (ZIP codes, diabetes types, program codes, user IDs, etc.) and want to treat them as labels, not numeric values
+>- <h4> when reading in data, sometimes number columns load as a factor. You've got some non-numeric characters in there somewhere and R automatically converts strings to a factor</h4>
+  <p>we can suppress this behavior using the argument stringsAsFactors = FALSE</p>
+
+----
+<h3>next up: multi-dimensional data structures</h3>
+>- <h4>matrices and arrays: same vector class</h4>
+    <p>a matrix is just a 2D array</p>
+>- <h4>matrices are useful if you want to store your data in a grid. we won't have much use for them at first</h4>
+    <p>most of the data we'll see is made up of different classes and must be stored in a data frame</p>
+>- <h4>data frames are simply equal-length lists (typeof() will produce "list")</h4>
+>- <h4>it's useful to know the basics of these multidimensional structures when we start passing functions through our data</h4>
+
+----
+<h3>let's look at dimensions</h3>
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+x <- matrix(1:10, ncol = 2, nrow = 5)
+x
+```
+<p>note the numbers in the square brackets</p>
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+shows <- data.frame(character = c("Kirk", "Picard", "Janeway"),
+                    show = c("Star Trek", "TNG", "Voyager"),
+                    show.order = c(1,2,3), stringsAsFactors = FALSE)
+colnames(shows)
+colnames(shows) <- c("captains", "show", "show.order")
+colnames(shows)[colnames(shows) == 'show'] <- 'show.name' #or
+colnames(shows)[2] <- 'show.name'
+```
+----
+##{.build}
+<h2>let's load our first data frame</h2>
+>- <h3>traffic.csv is a dataset I downloaded from data.ny.gov</h3>
+<p>i've put in the Rlab repo the script used to download and clean the dataset(mobile.violations.R)</p>
+>- <h3>let's load the dataset using the read.csv function and call it 'traffic'
+<p>let's include the option of not changing our string data type to factors</p>
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+traffic <- read.csv("traffic.csv", stringsAsFactors = FALSE)
+```
+
+>- <h3>let's get some quick and dirty info about our dataset</h3> 
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+str(traffic)
+summary(traffic)
+colnames(traffic)
+```
+
+----
+<h4>as always, class slides and practice code are available at:</h4>
+[https://github.com/ursulakaczmarek/Rlab](https://github.com/ursulakaczmarek/Rlab)
+<p></p>
+<center> ![](github.jpg)</center>
+  
+    
