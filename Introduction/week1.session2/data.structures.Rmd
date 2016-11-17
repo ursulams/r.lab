@@ -160,5 +160,3 @@ colnames(traffic)
 [https://github.com/ursulakaczmarek/Rlab](https://github.com/ursulakaczmarek/Rlab)
 <p></p>
 <center> ![](github.jpg)</center>
-  
-    
