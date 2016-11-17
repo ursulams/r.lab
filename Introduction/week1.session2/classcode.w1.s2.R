@@ -46,7 +46,7 @@ x <- as.factor(1:10)
 ## view levels
 levels(x)
 
-## this will throw an error
+## this will throw a warning and produce NA
 mean(x)
 ## as will this attempt to assign a new value to predefined level
 x[3] <- 3.5
