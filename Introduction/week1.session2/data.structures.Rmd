@@ -38,7 +38,7 @@ ast(x <- 10)
 
 ----
 ##{.build}
-<h3>let's write some quick expressions</h2>
+<h3>let's write some quick expressions</h3>
 <h4>create a vector with a value of one to 100 and assign it to an object called 'num.range'.</h4>
 <p>use a colon to denote the range (start:end)</p>
 
