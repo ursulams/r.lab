@@ -1,0 +1,152 @@
+---
+title: subsetting and binding
+author: ursula kaczmarek
+output: 
+  ioslides_presentation:
+    css: intro.css
+    logo: logo.jpg
+    incremental: TRUE
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+##picking apart your data  
+###subsetting is useful when you want to separate your data based on certain values,when you want to remove NAs or unknowns, etc.
+we're going to create several different data frames now, so let's save our code to a script to easily recreate these in the future
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# let's load our traffic ticket data and call it 'traffic'
+traffic <- read.csv("traffic.csv", stringsAsFactors = FALSE)
+# get an overview of the data
+str(traffic)
+``` 
+
+###let's look at the states represented in the dataset
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# print out all states 
+table(traffic$licensed)
+# we can also sort them in ascending order
+sort(table(traffic$licensed))
+# or descending
+sort(table(traffic$licensed), decreasing = TRUE)
+# two variables in the contintency table (like a pivot table) 
+table(traffic$licensed, traffic$gender)
+``` 
+
+## {.build}
+###hey, what's that <span style="color:#ed2354">$</span> doing there?
+a subsetting operator that IDs a single column name in our data frame
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# print out the seventh column in our dataset using the column name
+traffic$weekday
+```
+
+###focus on a single column using its position in double square brackets
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# this will print out the same thing but R simplifies it to a character vector
+traffic[[7]]
+
+## single brackets to keep as a data frame 
+traffic.weekday <- traffic[7]
+```
+
+###we can subset single rows too
+R subsets multidimnesional objects with a [row, column] index
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# leaving the column index blank returns all columns
+traffic[1, ]
+```
+
+----
+
+###what's up with the single brackets?
+each row has more than one value, and we use single brackets for subsetting multiple values
+
+###subsetting more than one row or column
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# subset more than one column
+traffic[c("court", "weekday")] # or
+traffic[c(1,7)]
+
+# subset the first ten rows on the data 
+traffic[1:10, ]
+
+# subset rows 10 and 15
+traffic[c(10, 15), ]
+```
+
+----
+
+###say we want to create a new dataset called 'bronx' that contains only tickets issued in the Bronx
+that sounds like subsetting our observations!
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# what is the Bronx court called?
+table(traffic$court) 
+``` 
+
+###we know what column we want, so how do we pick out the rows?
+logical subsetting: R picks out rows based on a matching condition    
+(like 'WHERE' in SQL)  
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# note the indexing and the double equal sign!
+## we're not assigning values, so we use a double equal sign operator
+bronx <- traffic[traffic$court == "BRONX TVB", ]
+``` 
+
+##{.build}
+###let's create a dataset called 'manhattan' for both Manhattan courts
+ID rows with either Manhattan North TVB or Manhattan South TVB  
+the or operator is the pipe: '|'   (SHIFT + \\\)
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+manhattan <- traffic[traffic$court == "MANHATTAN NORTH TVB" | 
+                    traffic$court == "MANHATTAN SOUTH TVB", ]
+``` 
+
+we can also use 'in' just like in SQL
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+manhattan <- traffic[traffic$court %in% 
+                    c("MANHATTAN NORTH TVB", "MANHATTAN SOUTH TVB"), ]
+``` 
+
+###let's try it for tickets issued in Queens. call the dataset 'queens'
+the courts are <span style="color:#0e2451">"QUEENS NORTH TVB" & "QUEENS SOUTH TVB"</span>
+
+##{.build}
+##the subset() function
+an alternative to index-based subsetting that is more convenient but can produce unintended results in larger datasets
+
+###let's create a dataset called 'brooklyn.north' using the subset() function
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+brooklyn.north <- subset(traffic, court == "BROOKLYN NORTH TVB")
+``` 
+###create another called brooklyn.south
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+brooklyn.south <- subset(traffic, court == "BROOKLYN SOUTH TVB")
+``` 
+
+##{.build}
+##the rbind() and cbind() functions
+
+###join north and south rows into a single dataset using rbind() 
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+brooklyn <- rbind(brooklyn.north, brooklyn.south, make.row.names = FALSE)
+``` 
+
+###create a unique ID for each row in brooklyn and add it using cbind()
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+unique.id <- 1:nrow(brooklyn)
+brooklyn <- cbind(unique.id, brooklyn)
+```
+----
+###as always, class slides and practice code are available at:
+[https://github.com/ursulakaczmarek/Rlab](https://github.com/ursulakaczmarek/Rlab)
+
+<center> ![](github.jpg)</center>
