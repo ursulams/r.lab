@@ -1,0 +1,151 @@
+---
+title: functions and functionals
+author: ursula kaczmarek
+output: 
+  ioslides_presentation:
+    css: intro.css
+    logo: logo.jpg
+    incremental: TRUE
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+----
+
+###functions are reusable bits of code used to solve a particular problem, like loading a package or calculating an average
+syntax: <span style="color:#0e2451">function.name(argument^1^, argument^2^, ...argument^n^)</span>
+
+###they are objects just like data frames, vectors, and lists are objects
+you can create them, manipulate them, and rename them just like all other objects
+
+###three parts to a function:
+- body (this is the code contained inside the function)
+- formals (the arguments the function takes)
+- environment (where the function is operating)
+
+## {.build}
+### we've already used some functions. remember str_replace() from the stringr package and cbind()?  
+
+###let's examine the body and formals of the str_replace() function
+create a new dataset field for borough: parse the borough from the 'court' field  
+we want to separate everything before the first bit of whitespace, right?
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# syntax: str_replace(string, pattern, replacement)
+borough <- str_replace(traffic$court, " .*$", "")
+```
+
+###let's break down the pattern argument (inside the first set of quotes):
+- R first looks for whitespace ( )
+- R then looks for any character (.)
+- R then determines if any character appears any number of times (*)
+- R then looks until the end of the string ($)
+
+##{.build}
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# syntax: str_replace(string, pattern, replacement)
+borough <- str_replace(traffic$court, " .*$", "")
+```
+
+###let's break down the replacement argument
+- R then replaces the strings that match the pattern with nothing ("")
+
+###let's break down the string argument 
+- R applies the pattern and replacement arguments to the character vector we specified: (traffic$court)
+
+###but our replacement doesn't list Staten Island as a borough, it lists Richmond County.
+let's also change that using str_replace()
+
+##{.build}
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+borough <- str_replace(borough,"RICHMOND", "STATEN ISLAND")
+```
+
+###now let's append our new character vector to our traffic dataset using cbind()
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+traffic <- cbind(traffic, borough, stringsAsFactors = FALSE)
+```
+
+##{.build}
+###user-defined functions
+###many times it will be useful to write your own functions. this can:
+- reduce the lines of code you need to complete a task
+- reduce repitition in your code (DRY principle)
+- reduce opportunities for mistakes
+
+###basic syntax of a user-defined function:
+<span style="color:#0e2451">function.name <- </span>function(arg^1^, arg^2^...) {  
+  # data manipulation  
+  # return value  
+}
+
+##{.build}
+###data analysis always starts with a question: which borough saw the highest number of people busted for using their mobile while driving?
+let's write our own function called 'find.mode' to find the modes in our dataset columns
+
+- include only one argument: the object we're focused on
+- remember how we used sort(table(traffic$licensed), decreasing = TRUE) to find the state that appears most?
+- we want to return only the first element of that table
+
+###so our function would look like:
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+find.mode <- function(x) {
+  sort(table(x), decreasing = TRUE)[1]
+}
+```
+
+----
+
+###now let's apply the function same as we would a built-in function:
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# apply our function to the 'borough' column
+find.mode(traffic$borough)
+```
+
+###what if we want to find the modes of all the columns in our dataset?
+this is where the apply() family of loop functions comes in handy
+
+###also known as functionals, loop functions take other functions as their objects and aid data analysis. each functional will:
+- **split** data into smaller pieces
+- **apply** a function to each of the smaller pieces
+- **combine** the results back however you choose
+
+----
+
+###let's start with lapply()
+<span style="color:#0e2451">l</span>apply() splits data into individual observations, applies a function to each observation, and combines them back into a <span style="color:#0e2451">list</span>:
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# apply our function to the 'borough' column
+lapply(traffic, find.mode)
+```
+
+###if the output is a list, that means we use lapply() if our input is going to be of different classes of data like integers and character strings (sounds like a data frame, no?)
+
+###if our data is of the same class, we can simplify our output
+<span style="color:#0e2451">s</span>apply() combines our results back into a <span style="color:#0e2451">simple</span> character vector
+
+----
+###when creating the borough column, we repeated a lot of stuff with str_replace(), created a whole new vector named 'borough', and had to use cbind() right?  
+we could reduce repition by creating a user-defined function and sapply() looping 
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+create.borough <- function(traffic, borough, court) {
+  traffic['borough'] <- sapply(traffic['court'], 
+                               function(court) str_replace_all(court, c(" .*$"="",
+                               "RICHMOND"="STATEN ISLAND")))
+  return(traffic)
+}
+
+traffic <- create.borough(traffic)
+```
+
+____
+### as always, class slides and practice code are available at:
+[https://github.com/ursulakaczmarek/Rlab](https://github.com/ursulakaczmarek/Rlab)
+
+<center> ![](github.jpg)</center>
