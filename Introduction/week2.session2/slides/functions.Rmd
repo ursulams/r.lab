@@ -99,7 +99,7 @@ find.mode <- function(x) {
 
 ----
 
-###now let's apply the function same as we would a built-in function:
+###now apply the function same as we would a built-in function:
 
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
 # apply our function to the 'borough' column
@@ -116,11 +116,11 @@ this is where the apply() family of loop functions comes in handy
 
 ----
 
-###let's start with lapply()
+###start with lapply()
 <span style="color:#0e2451">l</span>apply() splits data into individual observations, applies a function to each observation, and combines them back into a <span style="color:#0e2451">list</span>:
 
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
-# apply our function to the 'borough' column
+# apply our function to the whole traffic dataset
 lapply(traffic, find.mode)
 ```
 
