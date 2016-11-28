@@ -35,7 +35,8 @@ tapply(wrecks$number_of_persons_killed, wrecks$borough, max)
 tapply(wrecks$number_of_persons_killed, wrecks$borough, sum)
 
 ## total number of cyclists killed per wreck indexed by borough
-tapply(wrecks$number_of_cyclist_killed, wrecks$borough, sum)
+## table(index, x) == tapply(x, index, sum)
+table(wrecks$borough, wrecks$number_of_cyclist_killed)
 
 # frequency tables
 table(wrecks$contributing_factor_vehicle_1, wrecks$borough)
