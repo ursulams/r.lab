@@ -31,7 +31,7 @@ we can establish a working directory on shared drives, which aids collaboration!
 
 *****
 ###a new project, new datasets 
-we can load data directly into R from the NY State and NYC Open Data Catalogs
+we can load data directly into R from the NYS and NYC Open Data Catalogs
 
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
 # importing online data directly into R using RSocrata
@@ -81,11 +81,8 @@ tapply(wrecks$number_of_persons_killed, wrecks$borough, mean)
 ## maximum number of fatalities indexed by borough
 tapply(wrecks$number_of_persons_killed, wrecks$borough, max)
 
-## total number of fatalities indexed by borough
-tapply(wrecks$number_of_persons_killed, wrecks$borough, sum)
-
 ## total number of cyclists killed per wreck indexed by borough
-tapply(wrecks$number_of_cyclist_killed, wrecks$borough, sum)
+table(wrecks$borough, wrecks$number_of_cyclist_killed)
 ```
 
 *****
