@@ -31,8 +31,6 @@ summary(wrecks)
 tapply(wrecks$number_of_persons_killed, wrecks$borough, mean)
 ## maximum number of fatalities indexed by borough
 tapply(wrecks$number_of_persons_killed, wrecks$borough, max)
-## total number of fatalities indexed by borough
-tapply(wrecks$number_of_persons_killed, wrecks$borough, sum)
 
 ## total number of cyclists killed per wreck indexed by borough
 ## table(index, x) == tapply(x, index, sum)
@@ -44,5 +42,5 @@ table(wrecks$contributing_factor_vehicle_1, wrecks$number_of_persons_killed)
 
 # test to see if there's an association between two categorical variables
 ## data not a random sample, so code for instruction only
-chi.table <- xtabs(~contributing_factor_vehicle_1 + vehicle_type_code1, data = wrecks)
+chi.table <- xtabs(~vehicle_type_code1 + contributing_factor_vehicle_1, data = wrecks)
 summary(chi.table)
