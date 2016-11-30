@@ -109,7 +109,7 @@ the p-value tells us the probability of getting resulting chi-square value
 
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
 ## note data not randomized, code to demo syntax & output
-chi.table <- xtabs(~contributing_factor_vehicle_1 + vehicle_type_code1, data = wrecks)
+chi.table <- xtabs(~vehicle_type_code1 + contributing_factor_vehicle_1, data = wrecks)
 summary(chi.table)
 ```
 
