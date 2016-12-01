@@ -1,0 +1,116 @@
+---
+title: dates and numbers
+author: ursula kaczmarek
+output:
+  ioslides_presentation:
+    css: intro.css
+    logo: logo.jpg
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+---
+
+###dates and times 
+###R is quite particular in the way it handles dates and times
+dates are their own class (Date) as are times (POSIXct and POSIXlt)  
+R calculates time as a list of seconds, minutes, and hours that have passed since 01-01-1970
+
+###importance of proper date/time formats
+- standardizes your data
+- makes time series visualization easier 
+- allows to break down dates into parts (e.g. extract weekday)
+- accepts arithmetic operations and comparisons (e.g. calculate time passsed)
+
+## {.build}
+###specialized functions coerce to proper date formats (base R)
+- strptime(): character vectors to POSIX class (fractions) 
+- as.Date(): character vectors to date class
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+char.date <- "01/01/2000"
+char.date2 <- strptime(char.date, format = "%m/%d/%Y")
+class(char.date2)
+```
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+char.date3 <- as.Date(char.date, format = "%m/%d/%Y" )
+class(char.date3)
+weekdays(char.date3)
+```
+
+###applying base R date functions
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+weekdays(char.date3)
+
+# calculate days passed (Sys.Date is today)
+Sys.Date() - char.date3
+```
+
+*****
+###other date packages
+###the base R functions are pretty picky
+you will get NAs instead of dates or the function will throw an error
+
+###coercing to dates with the lubridate package
+no 'format' argument needed  
+coercion function contains the output format  
+handles weird/missing separators better
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+library(lubridate)
+
+char.date4 <- "010116"
+char.date4 <- mdy(char.date4)
+class(char.date4)
+
+```
+
+*****
+###other date packages
+###coercing to common financial date formats with the zoo package
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+library(zoo)
+
+# original string is format YYYYQ
+date.qtr <- "20163"
+as.yearqtr(date.qtr, format = "%Y%q")
+```
+
+## {.build}
+###number sequences and randomization
+- we've already created ranges of numbers using (:)
+- seq() does the same thing but adds arguments like increment
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+1:20
+seq(1,20, by = 2)
+```
+
+###we can generate sequences of dates too
+including increments
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+seq.Date(char.date3, char.date4, by = "month")
+```
+
+
+*****
+###creating random samples of our data
+remember the chi-square requirement that data be a random sample?
+
+we couldn't use our wrecks dataset because it was't a random sample of the entire online dataset  
+we can draw a simple random sample using the sample() function
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# creates a new data frame which is a simple random sample
+sample.wrecks <- wrecks[sample(1:nrow(wrecks), 250,
+  	replace=FALSE), ]
+```  	
+
+
+*****
+###as always, class slides and practice code are available at:
+[https://github.com/ursulakaczmarek/Rlab](https://github.com/ursulakaczmarek/Rlab)
+
+<center> ![](github.jpg)</center>
