@@ -42,6 +42,10 @@ seq(1,20, 2)
 ## date range
 seq.Date(char.date3, char.date4, by = "month")
 
+## create date and quarter data frame to bind to other data
+from.date <- dmy(01012000)
+to.date <- dmy(01102015)
+date.qtr <- data.frame(date = seq.Date(from.date, to.date, by = "quarter"), quarter = c("Q1", "Q2", "Q3", "Q4"))
 
 # creates a new data frame which is a simple random sample
 sample.wrecks <- wrecks[sample(1:nrow(wrecks), 200,
