@@ -1,4 +1,7 @@
 # code we ran in class
+## week 4 session 1
+
+
 library(lubridate)
 
 # import the winning NY lotto dataset
