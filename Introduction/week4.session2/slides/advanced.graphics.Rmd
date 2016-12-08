@@ -1,0 +1,123 @@
+---
+title: advanced graphics
+author: ursula kaczmarek
+output:
+  ioslides_presentation:
+    css: intro.css
+    logo: logo.jpg
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+---
+###Advanced R graphics
+###ggplot: smoother graphics and increased functionality
+- ggplot2.org
+- borrows syntax from base R plotting
+- fills in the details like labels, legends, graph bars, etc.
+- easier to layer graphics, including jittering
+- handles dates
+
+
+## {.build}
+###import lotto data
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# import the winning NY lotto dataset
+download.file("https://raw.githubusercontent.com/ursulakaczmarek/Rlab/
+              master/Introduction/week4.session1/lotto.csv", "lotto.csv")
+
+lotto <- read.csv("lotto.csv", stringsAsFactors = FALSE)
+
+# coerce to proper date format
+library(lubridate)
+lotto['drawdate'] <- ymd(lotto$drawdate)
+```
+
+##{.build}
+####ggplot2 format
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+library(ggplot2)
+
+# creating a basic ggplot
+# basic dot plot of cashball values with date range formatting
+ggplot(lotto, aes(x = drawdate, y = cashball, color = cashball)) +
+  geom_point() +
+  scale_x_date(date_labels = "%b %y")
+```
+
+###let's visualize the number picks
+reformatting data wide to long
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+library(tidyr)
+
+lotto <- gather(lotto, pick, number, num1:num5)
+```
+
+##{.build}
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+ggplot(lotto, aes(x = drawdate, y = number, color = pick)) +
+  geom_point() +
+  scale_x_date(date_labels = "%b %y")
+```
+
+###colors are kinda blech, so let's change the palette
+
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+ggplot(lotto, aes(x = drawdate, y = number, color = pick)) +
+  geom_point() +
+  scale_x_date(date_labels = "%b %y") +
+  scale_color_brewer()
+```
+
+###some dots are hard to see, so use a diverging palette
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+ggplot(lotto, aes(x = drawdate, y = number, color = pick)) +
+  geom_point() +
+  scale_x_date(date_labels = "%b %y") +
+  scale_color_brewer(type = "div", palette = 7)
+
+```
+
+##{.build}
+###histograms
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# the ggplot histogram
+ggplot(lotto, aes(x = number)) +
+  geom_histogram(bins = 100, fill = 8, color = 9) 
+
+# color = count
+ggplot(lotto, aes(x = number)) +
+  geom_histogram(bins = 100, aes(fill = ..count..))
+
+# color = pick number
+ggplot(lotto, aes(x = number, fill = pick)) +
+  geom_histogram(bins = 100) +
+  scale_fill_brewer(type = "div", palette = 7) +
+  scale_x_continuous(breaks = seq(1,60,2))
+```
+
+##{.build}
+###faceting
+```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
+# break down plots by month and year
+ggplot(lotto, aes(x = number, y = pick, color = pick)) +
+geom_point() +
+facet_wrap(facets = month(drawdate) ~ year(drawdate))
+
+# break down plots by month
+ggplot(lotto, aes(x = number, y = pick, color = pick)) +
+geom_point() +
+facet_wrap(~ month(drawdate), ncol = 6)
+```
+
+
+*****
+###as always, class slides and practice code are available at:
+[https://github.com/ursulakaczmarek/Rlab](https://github.com/ursulakaczmarek/Rlab)
+
+<center> ![](github.jpg)</center>
