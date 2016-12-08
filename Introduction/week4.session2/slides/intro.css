@@ -1,0 +1,157 @@
+html, h2, h3, h4, p {
+	width: 100%;
+	height: 100%;
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 300;
+}
+
+html, body{
+	background-color: #d8e5f3 !important;
+	background-attachment: 100%;
+}
+
+slides > slide.backdrop {
+  	z-index: -10;
+  	display: block !important;
+  	background: white !important;
+}	
+
+slides >	slide:not(.nobackground):after {
+  content: ' ';
+}
+
+
+.title-slide hgroup > h1 {
+  font-size: 65px;
+  font-family: 'Calibri';
+  line-height: 1.4;
+  letter-spacing: -3px;
+  color: #0e2451 !important;
+}
+
+.title-slide hgroup h2 {
+  font-size: 34px;
+  color:#0e2451 !important;
+}
+
+.title-slide hgroup p {
+  font-size: 20px;
+  color: #ed2354 !important;
+  line-height: 1.3;
+  margin-top: 2em;
+}
+
+
+h2 {
+	color: #0e2451 !important;
+	line-height: 30pt;
+}
+
+h3 {
+	color: #0e2451 !important;
+	line-height: 26pt;
+}
+
+
+h4 {
+	color: #0e2451 !important;
+	line-height: 22pt;
+}
+
+p {
+	color: #ed2354 !important;
+	line-height: 22pt;
+}
+
+ul {
+  color: #ed2354;
+}
+
+ol {
+  color: #ed2354;
+}
+  
+
+aside.gdbar img {
+  	width:  170px !important;
+ 	  height: 170px !important;
+  	margin: 8px 8px;
+}
+
+aside.gdbar {
+  	width:  230px !important;
+  	height: 230px !important;
+}
+
+.prettyprint {
+  background-color: #d8e5f3 !important;
+}
+
+pre[data-lang]:after {
+  content: attr(data-lang);
+  background-color: #d8e5f3 !important;
+  right: 0;
+  top: 0;
+  position: absolute;
+  font-size: 16pt;
+  color: white;
+  padding: 2px 25px;
+  text-transform: uppercase;
+}
+
+code {
+  font-size: 95%;
+  font-family:'Consolas', consolas;
+  color: black;
+}
+
+.prettyprint .str,
+.prettyprint .atv {
+  color: #00929f !important;
+}
+
+
+.prettyprint .kwd,
+.prettyprint .tag {
+  color: #0066cc !important;
+}
+
+.prettyprint .com {
+  color: #0e2451 !important;
+  font-style: normal;
+}
+
+.prettyprint .lit {
+  color: #00439f !important;
+}
+
+  pre, code {
+    font-family: 'Consolas', consolas;
+}
+
+
+aside.gdbar {
+  height: 125px;
+  width: 125px;
+  position: absolute;
+  left: -1px;
+  top: 125px;
+  background: #d8e5f3 !important;
+}
+
+aside.gdbar img {
+  width: 85px;
+  height: 85px;
+  position: absolute;
+  right: 0;
+  margin: 8px 15px;
+}
+
+.build > * {
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.5s ease-in-out 0.2s;
+  -o-transition: opacity 0.5s ease-in-out 0.2s;
+  transition: opacity 0.5s ease-in-out 0.2s;
+}
