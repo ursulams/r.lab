@@ -48,5 +48,6 @@ to.date <- dmy(01102015)
 date.qtr <- data.frame(date = seq.Date(from.date, to.date, by = "quarter"), quarter = c("Q1", "Q2", "Q3", "Q4"))
 
 # creates a new data frame which is a simple random sample
+set.seed(123)
 sample.wrecks <- wrecks[sample(1:nrow(wrecks), 200,
                                replace=FALSE), ]
