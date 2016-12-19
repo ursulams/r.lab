@@ -14,6 +14,7 @@ lotto <- read.csv("lotto.csv", stringsAsFactors = FALSE)
 lotto['drawdate'] <- ymd(lotto$drawdate)
 
 # take a random sample of 150
+set.seed(123)
 lotto <- lotto[sample(1:nrow(lotto), 150,
                                replace=FALSE), ]
 
