@@ -104,6 +104,7 @@ we couldn't use our wrecks dataset because it was't a random sample of the entir
 we can draw a simple random sample using the sample() function
 ```{r, eval = FALSE, echo = TRUE, prompt = TRUE}
 # creates a new data frame which is a simple random sample
+set.seed(123)
 sample.wrecks <- wrecks[sample(1:nrow(wrecks), 250,
   	replace=FALSE), ]
 ```  	
