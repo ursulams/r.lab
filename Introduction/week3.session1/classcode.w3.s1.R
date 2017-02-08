@@ -11,9 +11,10 @@ url <- "https://data.cityofnewyork.us/resource/qiz3-axqb.json?$where=number_of_p
 # read the dataset into R
 wrecks <- read.socrata(url)
 
-# read in ZIP code demographic data using alternative method (for smaller datasets or no query in API call)
-download.file("https://data.cityofnewyork.us/resource/rreq-n6zk.csv", "demo.by.zip.csv")
-demographics <- read.csv("demo.by.zip.csv")
+
+# read in data using alternative method
+download.file("https://raw.githubusercontent.com/ursulakaczmarek/Rlab/master/Introduction/week3.session1/wrecks.csv", "wrecks.csv")
+wrecks <- read.csv("wrecks.csv")
 
 
 # examining the wrecks dataset
