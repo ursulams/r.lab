@@ -40,7 +40,7 @@ library(RSocrata)
 ## identify API endpoint for the dataset
 ## specify search terms just like in SQL
 url <- "https://data.cityofnewyork.us/
-resource/qiz3-axqb.json?$where=number_of_cyclist_injured > 0"
+resource/qiz3-axqb.json?$where=number_of_persons_killed > 0"
 
 # read the dataset into R
 wrecks <- read.socrata(url)
