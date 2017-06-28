@@ -17,7 +17,7 @@ sort(table(traffic$licensed))
 ## or descending
 sort(table(traffic$licensed), decreasing = TRUE)
 
-# two variables in the contintency table (like a pivot table) 
+# two variables in the contingency table (like a pivot table) 
 table(traffic$licensed, traffic$gender)
 
 # subsetting columns
