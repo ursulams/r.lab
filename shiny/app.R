@@ -40,7 +40,7 @@ ui <- shinyUI(
                        tabsetPanel(
                          tabPanel("law of large numbers", 
                                   tags$style("html, body {width:100%;height:100%}"),
-                                  sliderInput("flip.n", "choose a number of coin flips", 1, 250, 1),
+                                  sliderInput("flip.n", "choose a number of coin tosses", 1, 250, 1),
                                   plotOutput("coin.plot", height = "350px")), 
                          tabPanel("central limit theorem", 
                                   tags$style("html, body {width:100%;height:100%}"),
@@ -59,8 +59,8 @@ output$coin.plot <- renderPlot({
       means <- cumsum(sample(0 : 1, fn , replace = TRUE)) / (1 : fn)
       g <- ggplot(data.frame(x = 1 : fn, y = means), aes(x = x, y = y)) +
       geom_hline(size = 0.3 , yintercept = 0.5, alpha = 0.3) + 
-      geom_line(size = 0.4, colour = "#1e656d", alpha = 0.6) + 
-      geom_point(colour = "#f62a00", size = 2) +
+      geom_line(size = 0.4, color = "#1e656d", alpha = 0.6) + 
+      geom_point(color = "#f62a00", size = 2) +
       scale_x_continuous(name = "number of flips", breaks = seq(0, fn + 1, ceiling(fn/10))) + 
       ylim(0, 1)
       g + ylab("cumulative mean") +
@@ -72,7 +72,7 @@ output$sum.plot <- renderPlot({
     cfunc <- function(x, n) 2 * sqrt(n) * (mean(x) - 0.5) 
     df <- data.frame(x = c(apply(matrix(sample(0:1, sn*50, replace = TRUE), sn), 1, cfunc, 50)))
     g <- ggplot(df, aes(x = x, alpha = 0.5)) + 
-    geom_histogram(binwidth = 0.3, colour = "#1e656d", fill = "#1e656d", aes(y = ..density..)) + 
+    geom_histogram(binwidth = 0.3, color = "#1e656d", fill = "#1e656d", aes(y = ..density..)) + 
     stat_function(fun = dnorm, size = 2, color = "#f62a00") 
     g + theme_pander(lp = "none")
   })
