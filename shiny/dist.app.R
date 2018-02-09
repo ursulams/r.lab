@@ -1,4 +1,5 @@
-## shiny app demonstrating common statistical distributions
+# shiny app demonstrating common statistical distributions
+# author: ursula.kaczmarek@gmail.com
 
 library(shiny)
 library(shinythemes)
